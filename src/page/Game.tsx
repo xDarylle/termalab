@@ -37,7 +37,7 @@ export function Game() {
     localStorage.getItem(`playerLevel-${level}`) || "0",
   );
   const word =
-    data[PLAYER_LEVEL]?.term.toUpperCase().replaceAll(" ", "") || "TERMALAB";
+    data[PLAYER_LEVEL]?.term.toUpperCase().replaceAll(" ", "") || "";
 
   const [rowIndex, setRowIndex] = useState(0);
   const [guess, setGuess] = useState<Array<string>>([]);

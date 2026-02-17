@@ -112,13 +112,13 @@ export const AudioProvider = ({ children }: { children: React.ReactNode }) => {
         muted={muted}
         onCanPlayThrough={(e) => (e.currentTarget.volume = 0.4)}
       />
-      <audio
+      {/* <audio
         ref={bgGameRef}
         src="/audio/bgm2.mp3"
         loop
         muted={muted}
         onCanPlayThrough={(e) => (e.currentTarget.volume = 0.4)}
-      />
+      /> */}
     </AppAudioContext.Provider>
   );
 };
