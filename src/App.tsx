@@ -4,19 +4,22 @@ import { BrowserRouter, Route, Routes } from "react-router";
 import { Layout } from "./page/Layout";
 import { HomePage } from "./page/Home";
 import { Game } from "./page/Game";
+import { CoinProvider } from "./components/coin-provider";
 
 function App() {
   return (
     <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
       <AudioProvider>
-        <BrowserRouter>
-          <Routes>
-            <Route element={<Layout />}>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/game/:level" element={<Game />} />
-            </Route>
-          </Routes>
-        </BrowserRouter>
+        <CoinProvider>
+          <BrowserRouter>
+            <Routes>
+              <Route element={<Layout />}>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/game/:level" element={<Game />} />
+              </Route>
+            </Routes>
+          </BrowserRouter>
+        </CoinProvider>
       </AudioProvider>
     </ThemeProvider>
   );

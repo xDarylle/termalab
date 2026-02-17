@@ -13,6 +13,7 @@ const MenuButton = ({
   level: "easy" | "medium" | "hard";
 }) => {
   const { playButtonClick } = useAudio();
+  const PLAYER_LEVEL = parseInt(localStorage.getItem(`playerLevel-${level}`) || "0");
 
   return (
     <Link to={`/game/${level}`} replace>
@@ -23,7 +24,7 @@ const MenuButton = ({
       >
         {children}
         <div className="ml-auto flex flex-row items-center gap-2 text-sm font-normal">
-          <span>1/50</span>
+          <span>{PLAYER_LEVEL + 1}/50</span>
           <Star fill="yellow" className="text-yellow-200" />
         </div>
       </Button>
@@ -75,6 +76,3 @@ export const HomePage = () => {
   );
 };
 
-export const Test = () => {
-  return <h1>TEST HERE LMAO</h1>;
-};

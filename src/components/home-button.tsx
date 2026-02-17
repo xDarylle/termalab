@@ -22,9 +22,8 @@ export const HomeButton = () => {
         </DialogTrigger>
         <DialogContent>
           <DialogTitle>Leave Game?</DialogTitle>
-          <p className="text-sm text-muted-foreground text-center">
-            Are you sure you want to leave the current game? Your progress will
-            not be saved.
+          <p className="text-sm text-muted-foreground text-center text-pretty">
+            Are you sure you want to leave the current game?
           </p>
           <DialogFooter>
             <DialogClose asChild>

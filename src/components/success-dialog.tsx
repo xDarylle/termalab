@@ -9,9 +9,9 @@ import {
   DialogTitle,
 } from "./ui/dialog";
 import { useAudio } from "@/hooks/useAudio";
+import { DEFAULT_PER_LEVEL_REWARD } from "./coin-provider";
 
-
-export const SuccessDialog = (props: { open: boolean }) => {
+export const SuccessDialog = (props: { open: boolean; onNext: () => void }) => {
   const { playBGMenu } = useAudio();
 
   return (
@@ -26,7 +26,7 @@ export const SuccessDialog = (props: { open: boolean }) => {
         </DialogDescription>
         <div className="flex flex-row items-center rounded-full gap-1 justify-between px-2 h-9 text-white">
           <CircleDollarSign className="size-6 bg-secondary rounded-full p-1" />
-          <span className="text-sm font-bold mx-1 text-secondary">+100</span>
+          <span className="text-sm font-bold mx-1 text-secondary">+{DEFAULT_PER_LEVEL_REWARD}</span>
         </div>
 
         <p>Continue to the next level?</p>
@@ -37,7 +37,12 @@ export const SuccessDialog = (props: { open: boolean }) => {
               <Home />
             </Button>
           </Link>
-          <Button onClick={() => playBGMenu()}>
+          <Button
+            onClick={() => {
+              playBGMenu();
+              props.onNext();
+            }}
+          >
             Next Level
             <Play className="fill-background" />
           </Button>
