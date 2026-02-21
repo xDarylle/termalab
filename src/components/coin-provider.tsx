@@ -3,17 +3,22 @@ import React, { createContext, useState, useContext } from "react";
 type CoinProps = {
   count: number;
   addCoins: () => void;
-  payHints: () => void;
+  payHints: (type: keyof typeof HINTS) => void;
+  canBuyHints: (type: keyof typeof HINTS) => boolean
 };
 
 export const CoinContext = createContext<CoinProps>({
   count: 0,
   addCoins: () => {},
   payHints: () => {},
+  canBuyHints: () => false
 });
 
 export const DEFAULT_PER_LEVEL_REWARD = 10;
-export const DEFAULT_HINT_COST = 5;
+export const HINTS = {
+  CHARACTER: 5,
+  KEYBOARD: 10,
+};
 
 const initialCoins = parseInt(localStorage.getItem("playerCoins") || "0");
 
@@ -24,16 +29,26 @@ export const CoinProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const addCoins = () => {
     setCount((prev) => prev + DEFAULT_PER_LEVEL_REWARD);
-    localStorage.setItem("playerCoins", (count + DEFAULT_PER_LEVEL_REWARD).toString());
+    localStorage.setItem(
+      "playerCoins",
+      (count + DEFAULT_PER_LEVEL_REWARD).toString(),
+    );
   };
 
-  const payHints = () => {
-    setCount((prev) => Math.max(prev - DEFAULT_HINT_COST, 0));
-    localStorage.setItem("playerCoins", Math.max(count - DEFAULT_HINT_COST, 0).toString());
+  const payHints = (type: keyof typeof HINTS) => {
+    setCount((prev) => Math.max(prev - HINTS[type], 0));
+    localStorage.setItem(
+      "playerCoins",
+      Math.max(count - HINTS[type], 0).toString(),
+    );
   };
+
+  const canBuyHints = (type: keyof typeof HINTS) => {
+    return count - HINTS[type] >= 0
+  }
 
   return (
-    <CoinContext.Provider value={{ count, addCoins, payHints }}>
+    <CoinContext.Provider value={{ count, addCoins, payHints, canBuyHints }}>
       {children}
     </CoinContext.Provider>
   );
