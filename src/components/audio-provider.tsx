@@ -8,6 +8,7 @@ export type AudioContextProps = {
   playFailure: () => void;
   playBGMenu: () => void;
   playBGGame: () => void;
+  playHint: () => void;
   muted: boolean;
 };
 
@@ -16,9 +17,10 @@ export const AppAudioContext = createContext<AudioContextProps | null>(null);
 const defaultMuted = localStorage.getItem('termalab-muted') === 'true';
 
 // Helper for SFX objects to ensure preloading
-const createSfx = (src: string) => {
+const createSfx = (src: string, volume: number = 1) => {
   const audio = new Audio(src);
   audio.preload = 'auto';
+  audio.volume = volume
   return audio;
 };
 
@@ -34,6 +36,7 @@ export const AudioProvider = ({ children }: { children: React.ReactNode }) => {
     keyPress: createSfx('/audio/keypress.wav'),
     success: createSfx('/audio/success.wav'),
     failure: createSfx('/audio/fail.wav'),
+    hint: createSfx("/audio/hint.wav", 0.1)
   }), []);
 
   const playSfx = useCallback((sound: HTMLAudioElement) => {
@@ -96,6 +99,9 @@ export const AudioProvider = ({ children }: { children: React.ReactNode }) => {
     playFailure: () => {
       bgMenuRef.current?.pause();
       playSfx(sfx.failure);
+    },
+    playHint: () => {
+      playSfx(sfx.hint)
     },
     playBGMenu,
     playBGGame,

@@ -19,13 +19,14 @@ import { useAudio } from "@/hooks/useAudio";
 import { LoadLevel } from "@/lib/level-loader";
 import { HINTS, useCoins } from "@/components/coin-provider";
 import { HintDialog } from "@/components/hint-dialog";
+import { LevelCompleteDialog } from "@/components/level-complete-dialog";
 
-const MAX_ROWS = 6
+const MAX_ROWS = 6;
 
 export function Game() {
   const { level } = useParams();
   const { addCoins, canBuyHints, payHints } = useCoins();
-  const { playButtonClick, playSuccess, playFailure } = useAudio();
+  const { playButtonClick, playSuccess, playFailure, playHint } = useAudio();
 
   const [data, setData] = useState<
     { term: string; description: string; sample_text: string }[]
@@ -36,6 +37,9 @@ export function Game() {
   const [rowIndex, setRowIndex] = useState(0);
   const [guess, setGuess] = useState<string[][]>([]);
   const [status, setStatus] = useState<Array<Array<Status | undefined>>>([]);
+
+  const [keyboardHint, setKeyboardHint] = useState(false);
+
   const [isComplete, setIsComplete] = useState(false);
   const [isFailed, setIsFailed] = useState(false);
 
@@ -123,42 +127,56 @@ export function Game() {
     });
 
     if (playerGuess === word) {
-      setIsComplete(true);
-      playSuccess();
-      addCoins();
+      if (hintIndex.length >= word.length) {
+        setIsComplete(true);
+        playSuccess();
+        addCoins();
+      } else {
+        setTimeout(() => {
+          setIsComplete(true);
+          playSuccess();
+          addCoins();
+        }, 400);
+      }
+
       return;
     }
 
     if (rowIndex === MAX_ROWS - 1) {
-      setIsFailed(true);
-      playFailure();
+      setTimeout(() => {
+        setIsFailed(true);
+        playFailure();
+      }, 400);
+
       return;
     }
 
-    const nextRow = rowIndex + 1;
+    setTimeout(() => {
+      const nextRow = rowIndex + 1;
 
-    setRowIndex(nextRow);
+      setRowIndex(nextRow);
 
-    setGuess((prev) => {
-      const copy = [...prev];
-      const nextRowData = [...copy[nextRow]];
+      setGuess((prev) => {
+        const copy = [...prev];
+        const nextRowData = [...copy[nextRow]];
 
-      hintIndex.forEach((i) => {
-        nextRowData[i] = word[i];
+        hintIndex.forEach((i) => {
+          nextRowData[i] = word[i];
+        });
+
+        copy[nextRow] = nextRowData;
+        return copy;
       });
 
-      copy[nextRow] = nextRowData;
-      return copy;
-    });
-
-    setStatus((prev) => {
-      const copy = [...prev];
-      const hintStatus = Array.from({ length: word.length }, (_, i) =>
-        hintIndex.includes(i) ? "GREEN" : undefined,
-      );
-      copy[nextRow] = hintStatus;
-      return copy;
-    });
+      setStatus((prev) => {
+        const copy = [...prev];
+        const hintStatus = Array.from({ length: word.length }, (_, i) =>
+          hintIndex.includes(i) ? "GREEN" : undefined,
+        );
+        copy[nextRow] = hintStatus;
+        return copy;
+      });
+    }, 300);
   };
 
   /* ---------------- RESET ---------------- */
@@ -176,6 +194,7 @@ export function Game() {
     setHintIndex([]);
     setIsComplete(false);
     setIsFailed(false);
+    setKeyboardHint(false);
   };
 
   /* ---------------- HINT ---------------- */
@@ -190,6 +209,7 @@ export function Game() {
 
     if (available.length === 0) return;
 
+    playHint()
     payHints("CHARACTER");
 
     const randomIndex = available[Math.floor(Math.random() * available.length)];
@@ -219,6 +239,13 @@ export function Game() {
     <div className="flex flex-col items-center h-max my-auto pt-4 pb-2">
       {loading ? (
         <LoaderIcon className="size-4 animate-spin" />
+      ) : PLAYER_LEVEL >= data.length ? (
+        <LevelCompleteDialog
+          onConfirm={() => {
+            localStorage.setItem(`playerLevel-${level}`, "0");
+            reset();
+          }}
+        />
       ) : (
         <>
           <SuccessDialog
@@ -277,6 +304,12 @@ export function Game() {
               variant="secondary"
               className="ml-2 mr-0.5 relative"
               size="sm"
+              onClick={() => {
+                payHints("KEYBOARD");
+                setKeyboardHint(true);
+                playHint()
+              }}
+              disabled={keyboardHint}
             >
               <KeyboardIcon />
               <div className="absolute -bottom-1 -right-1 outline outline-background rounded-full size-4 bg-accent text-foreground text-[clamp(0.4rem,1vw,0.6rem)] flex items-center justify-center">
@@ -325,6 +358,8 @@ export function Game() {
                 return newGuess;
               });
             }}
+            isHintActive={keyboardHint}
+            word={word}
           />
           <Button
             className="mt-4"
@@ -355,7 +390,8 @@ const Row = ({
         <div
           key={colIndex}
           className={cn(
-            "w-10 h-10 rounded flex items-center justify-center bg-muted text-[clamp(0.5rem,3vw,1rem)]",
+            "w-10 h-10 rounded flex items-center justify-center bg-muted text-[clamp(0.5rem,3vw,1rem)] tile",
+            status && status[colIndex] && "tile-reveal",
             status && status[colIndex] === "GREEN" && "bg-green-500 text-white",
             status &&
               status[colIndex] === "YELLOW" &&

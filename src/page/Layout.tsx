@@ -15,9 +15,9 @@ export const Layout = () => {
       <StartGameDialog />
       <div className="bg-pattern h-full w-full absolute top-0 left-0 -z-10 opacity-5 dark:opacity-5"></div>
       <div className="flex flex-row items-center  justify-between">
-        <div className="flex flex-row items-center rounded-full bg-card gap-1 shadow border border-border justify-between px-2 h-9 text-white">
-          <CircleDollarSign className="size-6 bg-secondary rounded-full p-1" />
-          <span className="text-sm font-bold mx-1 text-secondary">{count}</span>
+        <div className="flex flex-row items-center rounded-full bg-card gap-1 text-secondary shadow border border-border justify-between px-2 h-9">
+          <CircleDollarSign className="size-6 bg-secondary text-white rounded-full p-1" />
+          <span className="text-sm font-bold mx-1">{count}</span>
         </div>
         <div className="flex flex-row items-center gap-2">
           <HomeButton key={location.pathname} />
