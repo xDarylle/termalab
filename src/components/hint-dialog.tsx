@@ -65,9 +65,9 @@ export const HintDialog = (props: { data: LevelData }) => {
         <DialogDescription className="font-gummy text-sm text-secondary">
           {props.data.description}
         </DialogDescription>
-        <DialogFooter className="text-center text-pretty text-sm font-gummy bg-card w-full p-2 rounded">
+        <div className="text-center text-pretty text-sm font-gummy bg-card w-full p-2 rounded">
           {replaceWithBlanks(props.data.term, props.data.sample_text)}
-        </DialogFooter>
+        </div>
       </DialogContent>
     </Dialog>
   );

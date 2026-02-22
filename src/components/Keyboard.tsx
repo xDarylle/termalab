@@ -33,7 +33,7 @@ export default function Keyboard({
             {rowIndex === 2 && <div className="w-4 sm:w-10" />}
 
             {row.map((key) => (
-              <div key={key} className="relative flex w-full h-full">
+              <div key={key} className="relative flex flex-1 h-full">
                 <Key
                   label={key}
                   onClick={() => onKeyPress?.(key)}
