@@ -41,7 +41,7 @@ export default function Keyboard({
                   isHintActive={isHintActive}
                 />
                 {isHintActive && word?.includes(key) && (
-                  <span className="absolute bg-accent h-3 w-3 flex justify-center items-center top-0.5 right-0.5 text-[clamp(0.45rem,1vw,0.6rem)] ">
+                  <span className="absolute bg-accent border border-primary rounded h-3 w-3 flex justify-center items-center top-0 right-0 text-[clamp(0.45rem,1vw,0.6rem)] ">
                     {word
                       .split("")
                       .reduce(

@@ -80,6 +80,7 @@ export function Game() {
       setHintIndex(parsed.hintIndex);
       setIsComplete(parsed.isComplete);
       setIsFailed(parsed.isFailed);
+      setKeyboardHint(parsed.keyboardHint)
     } else {
       const freshBoard = Array.from({ length: MAX_ROWS }, () =>
         Array.from({ length: word.length }, () => ""),
@@ -90,6 +91,7 @@ export function Game() {
       setHintIndex([]);
       setIsComplete(false);
       setIsFailed(false);
+      setKeyboardHint(false)
     }
   }, [word]);
 
@@ -105,10 +107,11 @@ export function Game() {
       hintIndex,
       isComplete,
       isFailed,
+      keyboardHint
     };
 
     localStorage.setItem(gameStateKey, JSON.stringify(state));
-  }, [guess, status, rowIndex, hintIndex, isComplete, isFailed]);
+  }, [guess, status, rowIndex, hintIndex, isComplete, isFailed, keyboardHint]);
 
   /* ---------------- SUBMIT ---------------- */
 
@@ -309,7 +312,7 @@ export function Game() {
                 setKeyboardHint(true);
                 playHint()
               }}
-              disabled={keyboardHint}
+              disabled={keyboardHint || !canBuyHints("KEYBOARD")}
             >
               <KeyboardIcon />
               <div className="absolute -bottom-1 -right-1 outline outline-background rounded-full size-4 bg-accent text-foreground text-[clamp(0.4rem,1vw,0.6rem)] flex items-center justify-center">

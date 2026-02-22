@@ -17,7 +17,7 @@ export const CoinContext = createContext<CoinProps>({
 export const DEFAULT_PER_LEVEL_REWARD = 10;
 export const HINTS = {
   CHARACTER: 5,
-  KEYBOARD: 10,
+  KEYBOARD: 15,
 };
 
 const initialCoins = parseInt(localStorage.getItem("playerCoins") || "0");
