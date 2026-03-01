@@ -21,7 +21,7 @@ export default function Keyboard({
 }) {
   const { playKeyPress } = useAudio();
   return (
-    <div className="w-full max-w-xs sm:max-w-96 mx-auto px-2 select-none mt-auto">
+    <div className="w-full max-w-xs sm:max-w-md mx-auto px-2 select-none mt-auto">
       <div className="space-y-1">
         {rows.map((row, rowIndex) => (
           <div

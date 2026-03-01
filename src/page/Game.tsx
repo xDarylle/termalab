@@ -301,7 +301,7 @@ export function Game() {
   ]);
 
   return (
-    <div className="flex flex-col mx-auto items-center justify-center h-full min-h-0 py-2 sm:py-4">
+    <div className="flex flex-col mx-auto items-center justify-center h-full min-h-0 py-2 sm:py-4 md:w-full">
       {loading ? (
         <LoaderIcon className="size-4 animate-spin" />
       ) : playerLevel >= data.length ? (
@@ -327,7 +327,7 @@ export function Game() {
           />
           <FailedDialog open={isFailed} onTry={reset} />
 
-          <Container className="max-w-xs sm:max-w-96 my-auto mx-auto font-gummy flex flex-col gap-y-2 rounded-md p-3 sm:p-5">
+          <Container className="max-w-xs sm:max-w-md my-auto mx-auto font-gummy flex flex-col gap-y-2 rounded-md p-3 sm:p-5">
             <div className="flex flex-row items-center justify-between text-xs sm:text-sm">
               <p className="font-medium text-primary">
                 {level?.toUpperCase()} LEVEL
