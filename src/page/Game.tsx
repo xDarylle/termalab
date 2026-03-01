@@ -61,7 +61,7 @@ export function Game() {
     LoadLevel(level)
       .then((module) => {
         const loaded = module.default || module;
-        setData(loaded);
+        setData(loaded.slice(0, 10));
       })
       .catch(console.error)
       .finally(() => setLoading(false));
