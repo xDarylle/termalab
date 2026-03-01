@@ -26,14 +26,11 @@ function replaceWithBlanks(word: string, sentence: string): string {
   let pattern: string;
 
   if (lower.endsWith("y") && !/[aeiou]y$/.test(lower)) {
-    // city -> city | cities
     const base = escapeRegex(lower.slice(0, -1));
     pattern = `${base}(y|ies)`;
   } else if (/(s|x|z|ch|sh)$/.test(lower)) {
-    // box -> box | boxes
     pattern = `${escapedWord}(es)?`;
   } else {
-    // atom -> atom | atoms
     pattern = `${escapedWord}s?`;
   }
 

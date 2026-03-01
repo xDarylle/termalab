@@ -1,7 +1,7 @@
 import { useState, useCallback } from "react";
 import { Container } from "@/components/container";
 import { Button } from "@/components/ui/button";
-import { useCoins } from "@/components/coin-provider";
+import { useCoins } from "@/hooks/useCoins";
 import { useAudio } from "@/hooks/useAudio";
 import {
   CheckCircle2,

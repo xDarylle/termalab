@@ -36,11 +36,10 @@ const MenuButton = ({
 
 const Title = ({ children }: { children: string }) => {
   const chars = children.split("");
-  // Generate stable random configs once
   const animationConfig = useMemo(() => {
     return chars.map(() => ({
-      duration: 3 + Math.random() * 2, // 3s - 5s
-      delay: Math.random() * 2, // 0s - 2s
+      duration: 3 + Math.random() * 2,
+      delay: Math.random() * 2,
     }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [children]);

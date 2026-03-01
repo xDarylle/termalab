@@ -1,5 +1,5 @@
 import { useParams } from "react-router";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useCallback, useLayoutEffect, startTransition } from "react";
 import {
   CheckCircle,
   KeyboardIcon,
@@ -17,11 +17,61 @@ import { SuccessDialog } from "@/components/success-dialog";
 import { FailedDialog } from "@/components/failed-dialog";
 import { useAudio } from "@/hooks/useAudio";
 import { LoadLevel } from "@/lib/level-loader";
-import { HINTS, useCoins } from "@/components/coin-provider";
+import { HINTS } from "@/components/coin-provider";
+import { useCoins } from "@/hooks/useCoins";
 import { HintDialog } from "@/components/hint-dialog";
 import { LevelCompleteDialog } from "@/components/level-complete-dialog";
 
 const MAX_ROWS = 6;
+
+interface GameState {
+  guess: string[][];
+  status: Array<Array<Status | undefined>>;
+  rowIndex: number;
+  hintIndex: number[];
+  isComplete: boolean;
+  isFailed: boolean;
+  keyboardHint: boolean;
+}
+
+const createEmptyBoard = (wordLength: number): string[][] =>
+  Array.from({ length: MAX_ROWS }, () =>
+    Array.from({ length: wordLength }, () => ""),
+  );
+
+const createInitialState = (wordLength: number): GameState => ({
+  guess: createEmptyBoard(wordLength),
+  status: [],
+  rowIndex: 0,
+  hintIndex: [],
+  isComplete: false,
+  isFailed: false,
+  keyboardHint: false,
+});
+
+const loadSavedState = (key: string): GameState | null => {
+  const saved = localStorage.getItem(key);
+  if (saved) {
+    try {
+      const parsed = JSON.parse(saved);
+      return {
+        guess: parsed.guess,
+        status: parsed.status,
+        rowIndex: parsed.rowIndex,
+        hintIndex: parsed.hintIndex,
+        isComplete: parsed.isComplete,
+        isFailed: parsed.isFailed,
+        keyboardHint: parsed.keyboardHint,
+      };
+    } catch {
+      return null;
+    }
+  }
+  return null;
+};
+
+const getGameStateKey = (level: string | undefined, playerLevel: number) =>
+  `gameState-${level}-${playerLevel}`;
 
 export function Game() {
   const { level } = useParams();
@@ -31,29 +81,34 @@ export function Game() {
   const [data, setData] = useState<
     { term: string; description: string; sample_text: string }[]
   >([]);
-
   const [loading, setLoading] = useState(true);
-  const [hintIndex, setHintIndex] = useState<number[]>([]);
-  const [rowIndex, setRowIndex] = useState(0);
-  const [guess, setGuess] = useState<string[][]>([]);
-  const [status, setStatus] = useState<Array<Array<Status | undefined>>>([]);
 
-  const [keyboardHint, setKeyboardHint] = useState(false);
+  const [levelRevision, setLevelRevision] = useState(0);
 
-  const [isComplete, setIsComplete] = useState(false);
-  const [isFailed, setIsFailed] = useState(false);
-
-  const PLAYER_LEVEL = parseInt(
-    localStorage.getItem(`playerLevel-${level}`) || "0",
-  );
+  const playerLevel = useMemo(() => {
+    return parseInt(localStorage.getItem(`playerLevel-${level}`) || "0");
+  }, [level, levelRevision]);
 
   const word = useMemo(() => {
-    return data[PLAYER_LEVEL]?.term?.toUpperCase().replaceAll(" ", "") || "";
-  }, [data, PLAYER_LEVEL]);
+    return data[playerLevel]?.term?.toUpperCase().replaceAll(" ", "") || "";
+  }, [data, playerLevel]);
 
-  const gameStateKey = `gameState-${level}-${PLAYER_LEVEL}`;
+  const gameStateKey = getGameStateKey(level, playerLevel);
 
-  /* ---------------- LOAD LEVEL + RESTORE STATE ---------------- */
+  const [gameState, setGameState] = useState<GameState>(() =>
+    createInitialState(0),
+  );
+
+  useLayoutEffect(() => {
+    if (!word) return;
+
+    const saved = loadSavedState(gameStateKey);
+    const initialState = saved ?? createInitialState(word.length);
+
+    startTransition(() => {
+      setGameState(initialState);
+    });
+  }, [word, gameStateKey]);
 
   useEffect(() => {
     if (!level) return;
@@ -69,58 +124,59 @@ export function Game() {
 
   useEffect(() => {
     if (!word) return;
+    localStorage.setItem(gameStateKey, JSON.stringify(gameState));
+  }, [gameState, gameStateKey, word]);
 
-    const saved = localStorage.getItem(gameStateKey);
+  const {
+    guess,
+    status,
+    rowIndex,
+    hintIndex,
+    isComplete,
+    isFailed,
+    keyboardHint,
+  } = gameState;
 
-    if (saved) {
-      const parsed = JSON.parse(saved);
-      setGuess(parsed.guess);
-      setStatus(parsed.status);
-      setRowIndex(parsed.rowIndex);
-      setHintIndex(parsed.hintIndex);
-      setIsComplete(parsed.isComplete);
-      setIsFailed(parsed.isFailed);
-      setKeyboardHint(parsed.keyboardHint)
-    } else {
-      const freshBoard = Array.from({ length: MAX_ROWS }, () =>
-        Array.from({ length: word.length }, () => ""),
-      );
-      setGuess(freshBoard);
-      setStatus([]);
-      setRowIndex(0);
-      setHintIndex([]);
-      setIsComplete(false);
-      setIsFailed(false);
-      setKeyboardHint(false)
-    }
-  }, [word]);
+  const setGuess = useCallback((updater: (prev: string[][]) => string[][]) => {
+    setGameState((prev) => ({ ...prev, guess: updater(prev.guess) }));
+  }, []);
 
-  /* ---------------- AUTO SAVE ---------------- */
+  const setStatus = useCallback(
+    (updater: (prev: Array<Array<Status | undefined>>) => Array<Array<Status | undefined>>) => {
+      setGameState((prev) => ({ ...prev, status: updater(prev.status) }));
+    },
+    [],
+  );
 
-  useEffect(() => {
-    if (!word) return;
+  const setRowIndex = useCallback((value: number) => {
+    setGameState((prev) => ({ ...prev, rowIndex: value }));
+  }, []);
 
-    const state = {
-      guess,
-      status,
-      rowIndex,
-      hintIndex,
-      isComplete,
-      isFailed,
-      keyboardHint
-    };
+  const setHintIndex = useCallback((updater: number[] | ((prev: number[]) => number[])) => {
+    setGameState((prev) => ({
+      ...prev,
+      hintIndex: typeof updater === "function" ? updater(prev.hintIndex) : updater,
+    }));
+  }, []);
 
-    localStorage.setItem(gameStateKey, JSON.stringify(state));
-  }, [guess, status, rowIndex, hintIndex, isComplete, isFailed, keyboardHint]);
+  const setIsComplete = useCallback((value: boolean) => {
+    setGameState((prev) => ({ ...prev, isComplete: value }));
+  }, []);
 
-  /* ---------------- SUBMIT ---------------- */
+  const setIsFailed = useCallback((value: boolean) => {
+    setGameState((prev) => ({ ...prev, isFailed: value }));
+  }, []);
 
-  const handleSubmit = () => {
-    if (guess[rowIndex].includes("")) return;
+  const setKeyboardHint = useCallback((value: boolean) => {
+    setGameState((prev) => ({ ...prev, keyboardHint: value }));
+  }, []);
+
+  const handleSubmit = useCallback(() => {
+    if (gameState.guess[rowIndex].includes("")) return;
 
     playButtonClick();
 
-    const playerGuess = guess[rowIndex].join("");
+    const playerGuess = gameState.guess[rowIndex].join("");
     const newStatus = getStatus(playerGuess, word);
 
     setStatus((prev) => {
@@ -141,7 +197,6 @@ export function Game() {
           addCoins();
         }, 400);
       }
-
       return;
     }
 
@@ -150,7 +205,6 @@ export function Game() {
         setIsFailed(true);
         playFailure();
       }, 400);
-
       return;
     }
 
@@ -180,29 +234,28 @@ export function Game() {
         return copy;
       });
     }, 300);
-  };
+  }, [
+    gameState.guess,
+    rowIndex,
+    word,
+    hintIndex,
+    playButtonClick,
+    playSuccess,
+    playFailure,
+    addCoins,
+    setStatus,
+    setGuess,
+    setRowIndex,
+    setIsComplete,
+    setIsFailed,
+  ]);
 
-  /* ---------------- RESET ---------------- */
-
-  const reset = () => {
+  const reset = useCallback(() => {
     localStorage.removeItem(gameStateKey);
+    setGameState(createInitialState(word.length));
+  }, [gameStateKey, word.length]);
 
-    const freshBoard = Array.from({ length: MAX_ROWS }, () =>
-      Array.from({ length: word.length }, () => ""),
-    );
-
-    setGuess(freshBoard);
-    setStatus([]);
-    setRowIndex(0);
-    setHintIndex([]);
-    setIsComplete(false);
-    setIsFailed(false);
-    setKeyboardHint(false);
-  };
-
-  /* ---------------- HINT ---------------- */
-
-  const handleHintCharacter = () => {
+  const handleHintCharacter = useCallback(() => {
     if (hintIndex.length >= word.length) return;
 
     const available = word
@@ -212,7 +265,7 @@ export function Game() {
 
     if (available.length === 0) return;
 
-    playHint()
+    playHint();
     payHints("CHARACTER");
 
     const randomIndex = available[Math.floor(Math.random() * available.length)];
@@ -236,16 +289,26 @@ export function Game() {
       copy[rowIndex] = hintStatus;
       return copy;
     });
-  };
+  }, [
+    hintIndex,
+    word,
+    rowIndex,
+    playHint,
+    payHints,
+    setHintIndex,
+    setGuess,
+    setStatus,
+  ]);
 
   return (
     <div className="flex flex-col mx-auto items-center justify-center h-full min-h-0 py-2 sm:py-4">
       {loading ? (
         <LoaderIcon className="size-4 animate-spin" />
-      ) : PLAYER_LEVEL >= data.length ? (
+      ) : playerLevel >= data.length ? (
         <LevelCompleteDialog
           onConfirm={() => {
             localStorage.setItem(`playerLevel-${level}`, "0");
+            setLevelRevision((prev) => prev + 1);
             reset();
           }}
         />
@@ -256,8 +319,9 @@ export function Game() {
             onNext={() => {
               localStorage.setItem(
                 `playerLevel-${level}`,
-                (PLAYER_LEVEL + 1).toString(),
+                (playerLevel + 1).toString(),
               );
+              setLevelRevision((prev) => prev + 1);
               reset();
             }}
           />
@@ -270,7 +334,7 @@ export function Game() {
               </p>
               <div className="flex flex-row items-center gap-1 sm:gap-2">
                 <Star fill="#fcc800" className="text-yellow-400 size-3 sm:size-4" />
-                <span>{PLAYER_LEVEL + 1}/50</span>
+                <span>{playerLevel + 1}/10</span>
               </div>
             </div>
             <div className="flex flex-col gap-0.5 font-sans font-medium uppercase">
@@ -286,7 +350,7 @@ export function Game() {
           </Container>
 
           <div className="flex flex-row items-center w-full my-2 sm:my-4 max-w-2xl px-2 sm:px-0">
-            <HintDialog data={data[PLAYER_LEVEL]} />
+            <HintDialog data={data[playerLevel]} />
 
             <Button
               variant="secondary"
@@ -310,7 +374,7 @@ export function Game() {
               onClick={() => {
                 payHints("KEYBOARD");
                 setKeyboardHint(true);
-                playHint()
+                playHint();
               }}
               disabled={keyboardHint || !canBuyHints("KEYBOARD")}
             >
@@ -329,7 +393,6 @@ export function Game() {
                 const newGuess = [...prev];
                 const currentRow = [...newGuess[rowIndex]];
 
-                // Find first empty non-hint position
                 const targetIndex = currentRow.findIndex(
                   (char, i) => char === "" && !hintIndex.includes(i),
                 );
@@ -349,7 +412,6 @@ export function Game() {
                 const newGuess = [...prev];
                 const currentRow = [...newGuess[rowIndex]];
 
-                // Find last filled non-hint position
                 for (let i = currentRow.length - 1; i >= 0; i--) {
                   if (currentRow[i] !== "" && !hintIndex.includes(i)) {
                     currentRow[i] = "";
@@ -387,7 +449,6 @@ const Row = ({
   guess?: string[];
   status?: Array<Status | undefined>;
 }) => {
-  // Calculate tile size based on number of columns for mobile responsiveness
   const getTileSize = () => {
     if (columns <= 5) return "w-9 h-9 sm:w-10 sm:h-10";
     if (columns <= 7) return "w-8 h-8 sm:w-10 sm:h-10";

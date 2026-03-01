@@ -1,7 +1,10 @@
-import { AppAudioContext, type AudioContextProps } from "@/components/audio-provider"
-import { useContext } from "react"
+import { useContext } from "react";
+import { AudioContext } from "@/contexts/audio-context";
 
 export const useAudio = () => {
-  const context = useContext(AppAudioContext)
-  return context as AudioContextProps
-}
+  const context = useContext(AudioContext);
+  if (!context) {
+    throw new Error("useAudio must be used within an AudioProvider");
+  }
+  return context;
+};

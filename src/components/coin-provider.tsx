@@ -1,24 +1,5 @@
-import React, { createContext, useState, useContext } from "react";
-
-type CoinProps = {
-  count: number;
-  addCoins: (amount?: number) => void;
-  payHints: (type: keyof typeof HINTS) => void;
-  canBuyHints: (type: keyof typeof HINTS) => boolean
-};
-
-export const CoinContext = createContext<CoinProps>({
-  count: 0,
-  addCoins: () => {},
-  payHints: () => {},
-  canBuyHints: () => false
-});
-
-export const DEFAULT_PER_LEVEL_REWARD = 10;
-export const HINTS = {
-  CHARACTER: 10,
-  KEYBOARD: 25,
-};
+import { useState } from "react";
+import { CoinContext, DEFAULT_PER_LEVEL_REWARD, HINTS } from "@/contexts/coin-context";
 
 const initialCoins = parseInt(localStorage.getItem("playerCoins") || "0");
 
@@ -45,8 +26,8 @@ export const CoinProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   const canBuyHints = (type: keyof typeof HINTS) => {
-    return count - HINTS[type] >= 0
-  }
+    return count - HINTS[type] >= 0;
+  };
 
   return (
     <CoinContext.Provider value={{ count, addCoins, payHints, canBuyHints }}>
@@ -55,9 +36,4 @@ export const CoinProvider: React.FC<{ children: React.ReactNode }> = ({
   );
 };
 
-export const useCoins = () => {
-  if (!useContext(CoinContext)) {
-    throw new Error("useCoins must be used within a CoinProvider");
-  }
-  return useContext(CoinContext);
-};
+export { DEFAULT_PER_LEVEL_REWARD, HINTS };

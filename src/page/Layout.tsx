@@ -4,7 +4,7 @@ import { HomeButton } from "@/components/home-button";
 import { CircleDollarSign } from "lucide-react";
 import { Outlet, useLocation } from "react-router";
 import { StartGameDialog } from "@/components/start-game-dialog";
-import { useCoins } from "@/components/coin-provider";
+import { useCoins } from "@/hooks/useCoins";
 
 export const Layout = () => {
   const location = useLocation();
