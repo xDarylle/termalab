@@ -7,11 +7,12 @@ export const ToggleMute = () => {
 
   return (
     <Button
-      size="icon"
+      size="sm"
       onClick={audioContext.toggleMute}
       variant={audioContext.muted ? 'outline' : 'default'}
+      className="h-8 w-8 sm:h-9 sm:w-9 p-0"
     >
-      {audioContext.muted ? <VolumeOff /> : <Volume2 />}
+      {audioContext.muted ? <VolumeOff className="size-4 sm:size-5" /> : <Volume2 className="size-4 sm:size-5" />}
     </Button>
   )
 }

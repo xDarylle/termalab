@@ -5,25 +5,25 @@ import { Link } from "react-router";
 
 export const LevelCompleteDialog = (props: { onConfirm: () => void }) => {
   return (
-    <div className="min-w-full max-w-md bg-card border border-border rounded-lg p-5 flex flex-col items-center gap-4 font-gummy">
-      <p className="ribbon text-sm text-white">Level Complete!</p>
-      <p>You have completed this level!</p>
-      <div className="flex flex-col gap-2 text-sm text-muted-foreground">
+    <div className="min-w-full max-w-sm sm:max-w-md bg-card border border-border rounded-lg p-4 sm:p-5 flex flex-col items-center gap-3 sm:gap-4 font-gummy mx-2">
+      <p className="ribbon text-xs sm:text-sm text-white px-3 py-1">Level Complete!</p>
+      <p className="text-sm sm:text-base">You have completed this level!</p>
+      <div className="flex flex-col gap-1.5 sm:gap-2 text-xs sm:text-sm text-muted-foreground">
         <div className="flex flex-row items-center gap-2">
-          <Star className="text-secondary fill-secondary" /> 50 Words Completed
+          <Star className="text-secondary fill-secondary size-4" /> 50 Words Completed
         </div>
         <div className="flex flex-row items-center gap-2">
-          <Star className="text-secondary fill-secondary" /> All Challenges
+          <Star className="text-secondary fill-secondary size-4" /> All Challenges
           Cleared
         </div>
         <div className="flex flex-row items-center gap-2">
-          <Star className="text-secondary fill-secondary" /> Level Mastered
+          <Star className="text-secondary fill-secondary size-4" /> Level Mastered
         </div>
 
-        <DialogFooter className="mt-4">
-          <Button onClick={props.onConfirm}>Replay Level</Button>
-          <Link to="/" replace>
-            <Button variant="secondary" className="w-full">
+        <DialogFooter className="mt-3 sm:mt-4 flex-col sm:flex-row gap-2">
+          <Button onClick={props.onConfirm} size="sm" className="w-full sm:w-auto">Replay Level</Button>
+          <Link to="/" replace className="w-full sm:w-auto">
+            <Button variant="secondary" size="sm" className="w-full">
               Back to Home
             </Button>
           </Link>

@@ -21,7 +21,7 @@ export default function Keyboard({
 }) {
   const { playKeyPress } = useAudio();
   return (
-    <div className="w-full max-w-2xl mx-auto px-2 select-none mt-auto">
+    <div className="w-full max-w-xs sm:max-w-96 mx-auto px-2 select-none mt-auto">
       <div className="space-y-1">
         {rows.map((row, rowIndex) => (
           <div
@@ -100,7 +100,7 @@ function Key({
       size="sm"
       variant="outline"
       className={cn(
-        "p-0 flex-1 h-full rounded text-lg bg-card dark:bg-card active:bg-black/5 dark:active:bg-black/5 transition-none",
+        "p-0 flex-1 h-full rounded text-base bg-card dark:bg-card active:bg-black/5 dark:active:bg-black/5 transition-none",
         isHintActive && !disabled && "border-primary dark:border-primary",
       )}
       disabled={disabled}

@@ -20,21 +20,21 @@ export const SuccessDialog = (props: { open: boolean; onNext: () => void }) => {
         showCloseButton={false}
         className="flex flex-col items-center justify-center"
       >
-        <DialogTitle>Level Complete!</DialogTitle>
-        <DialogDescription className="text-sm text-muted-foreground text-center">
+        <DialogTitle className="text-lg sm:text-xl">Level Complete!</DialogTitle>
+        <DialogDescription className="text-xs sm:text-sm text-muted-foreground text-center">
           Congratulations on completing the level!
         </DialogDescription>
-        <div className="flex flex-row items-center rounded-full gap-1 justify-between px-2 h-9 text-white">
-          <CircleDollarSign className="size-6 bg-secondary rounded-full p-1" />
-          <span className="text-sm font-bold mx-1 text-secondary">+{DEFAULT_PER_LEVEL_REWARD}</span>
+        <div className="flex flex-row items-center rounded-full gap-1 justify-between px-2 h-8 sm:h-9 text-white">
+          <CircleDollarSign className="size-5 sm:size-6 bg-secondary rounded-full p-1" />
+          <span className="text-xs sm:text-sm font-bold mx-1 text-secondary">+{DEFAULT_PER_LEVEL_REWARD}</span>
         </div>
 
-        <p>Continue to the next level?</p>
+        <p className="text-sm sm:text-base">Continue to the next level?</p>
 
-        <DialogFooter className="flex-row">
-          <Link to="/">
-            <Button variant="outline" onClick={() => playBGMenu()}>
-              <Home />
+        <DialogFooter className="flex-row gap-2 w-full sm:w-auto">
+          <Link to="/" className="flex-1 sm:flex-none">
+            <Button variant="outline" onClick={() => playBGMenu()} className="w-full sm:w-auto" size="sm">
+              <Home className="size-4 sm:size-5" />
             </Button>
           </Link>
           <Button
@@ -42,9 +42,11 @@ export const SuccessDialog = (props: { open: boolean; onNext: () => void }) => {
               playBGMenu();
               props.onNext();
             }}
+            className="flex-1 sm:flex-none"
+            size="sm"
           >
             Next Level
-            <Play className="fill-background" />
+            <Play className="fill-background size-4 sm:size-5" />
           </Button>
         </DialogFooter>
       </DialogContent>

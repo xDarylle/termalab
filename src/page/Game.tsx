@@ -239,7 +239,7 @@ export function Game() {
   };
 
   return (
-    <div className="flex flex-col items-center h-max my-auto pt-4 pb-2">
+    <div className="flex flex-col mx-auto items-center justify-center h-full min-h-0 py-2 sm:py-4">
       {loading ? (
         <LoaderIcon className="size-4 animate-spin" />
       ) : PLAYER_LEVEL >= data.length ? (
@@ -263,13 +263,13 @@ export function Game() {
           />
           <FailedDialog open={isFailed} onTry={reset} />
 
-          <Container className="max-w-96 mx-auto my-auto font-gummy flex flex-col gap-y-2 rounded-md">
-            <div className="flex flex-row items-center justify-between text-sm">
+          <Container className="max-w-xs sm:max-w-96 my-auto mx-auto font-gummy flex flex-col gap-y-2 rounded-md p-3 sm:p-5">
+            <div className="flex flex-row items-center justify-between text-xs sm:text-sm">
               <p className="font-medium text-primary">
                 {level?.toUpperCase()} LEVEL
               </p>
-              <div className="flex flex-row items-center gap-2">
-                <Star fill="#fcc800" className="text-yellow-400 size-4" />
+              <div className="flex flex-row items-center gap-1 sm:gap-2">
+                <Star fill="#fcc800" className="text-yellow-400 size-3 sm:size-4" />
                 <span>{PLAYER_LEVEL + 1}/50</span>
               </div>
             </div>
@@ -285,7 +285,7 @@ export function Game() {
             </div>
           </Container>
 
-          <div className="flex flex-row items-center w-full my-4 max-w-2xl">
+          <div className="flex flex-row items-center w-full my-2 sm:my-4 max-w-2xl px-2 sm:px-0">
             <HintDialog data={data[PLAYER_LEVEL]} />
 
             <Button
@@ -297,8 +297,8 @@ export function Game() {
               }
               onClick={handleHintCharacter}
             >
-              <SearchAlert />
-              <div className="absolute -bottom-1 -right-1 outline outline-background rounded-full size-4 bg-accent text-foreground text-[clamp(0.4rem,1vw,0.6rem)] flex items-center justify-center">
+              <SearchAlert className="size-4 sm:size-5" />
+              <div className="absolute -bottom-1 -right-1 outline outline-background rounded-full size-4 bg-accent text-foreground text-[0.5rem] sm:text-[clamp(0.4rem,1vw,0.6rem)] flex items-center justify-center">
                 $ {HINTS.CHARACTER}
               </div>
             </Button>
@@ -314,8 +314,8 @@ export function Game() {
               }}
               disabled={keyboardHint || !canBuyHints("KEYBOARD")}
             >
-              <KeyboardIcon />
-              <div className="absolute -bottom-1 -right-1 outline outline-background rounded-full size-4 bg-accent text-foreground text-[clamp(0.4rem,1vw,0.6rem)] flex items-center justify-center">
+              <KeyboardIcon className="size-4 sm:size-5" />
+              <div className="absolute -bottom-1 -right-1 outline outline-background rounded-full size-4 bg-accent text-foreground text-[0.5rem] sm:text-[clamp(0.4rem,1vw,0.6rem)] flex items-center justify-center">
                 $ {HINTS.KEYBOARD}
               </div>
             </Button>
@@ -370,7 +370,7 @@ export function Game() {
             disabled={guess[rowIndex]?.includes("")}
           >
             Submit Word
-            <CheckCircle />
+            <CheckCircle className="size-4 sm:size-5" />
           </Button>
         </>
       )}
@@ -387,13 +387,21 @@ const Row = ({
   guess?: string[];
   status?: Array<Status | undefined>;
 }) => {
+  // Calculate tile size based on number of columns for mobile responsiveness
+  const getTileSize = () => {
+    if (columns <= 5) return "w-9 h-9 sm:w-10 sm:h-10";
+    if (columns <= 7) return "w-8 h-8 sm:w-10 sm:h-10";
+    return "w-7 h-7 sm:w-9 sm:h-9";
+  };
+
   return (
     <div className="flex flex-row items-center justify-center gap-0.5">
       {Array.from({ length: columns }).map((_, colIndex) => (
         <div
           key={colIndex}
           className={cn(
-            "w-10 h-10 rounded flex items-center justify-center bg-muted text-[clamp(0.5rem,3vw,1rem)] tile",
+            getTileSize(),
+            "rounded flex items-center justify-center bg-muted text-sm sm:text-[clamp(0.5rem,3vw,1rem)] tile",
             status && status[colIndex] && "tile-reveal",
             status && status[colIndex] === "GREEN" && "bg-green-500 text-white",
             status &&

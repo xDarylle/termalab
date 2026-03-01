@@ -241,6 +241,23 @@ body {
   letter-spacing: var(--tracking-normal);
 }
 
+/* Mobile-friendly touch improvements */
+@layer base {
+  /* Prevent text selection on interactive elements for better mobile UX */
+  button, [role="button"] {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Ensure minimum touch target size on mobile */
+  @media (max-width: 640px) {
+    button, [role="button"], a {
+      min-height: 32px;
+      min-width: 32px;
+    }
+  }
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

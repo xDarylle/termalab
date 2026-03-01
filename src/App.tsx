@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Routes } from "react-router";
 import { Layout } from "./page/Layout";
 import { HomePage } from "./page/Home";
 import { Game } from "./page/Game";
+import { QuizPage } from "./page/Quiz";
 import { CoinProvider } from "./components/coin-provider";
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
               <Route element={<Layout />}>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/game/:level" element={<Game />} />
+                <Route path="/quiz" element={<QuizPage />} />
               </Route>
             </Routes>
           </BrowserRouter>
