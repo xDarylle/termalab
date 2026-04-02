@@ -116,7 +116,7 @@ export function Game() {
     LoadLevel(level)
       .then((module) => {
         const loaded = module.default || module;
-        setData(loaded.slice(0, 10));
+        setData(loaded);
       })
       .catch(console.error)
       .finally(() => setLoading(false));
@@ -334,7 +334,7 @@ export function Game() {
               </p>
               <div className="flex flex-row items-center gap-1 sm:gap-2">
                 <Star fill="#fcc800" className="text-yellow-400 size-3 sm:size-4" />
-                <span>{playerLevel + 1}/10</span>
+                <span>{playerLevel + 1}/{data.length}</span>
               </div>
             </div>
             <div className="flex flex-col gap-0.5 font-sans font-medium uppercase">

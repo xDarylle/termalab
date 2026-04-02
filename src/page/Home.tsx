@@ -26,7 +26,7 @@ const MenuButton = ({
       >
         {children}
         <div className="ml-auto flex flex-row items-center gap-2 text-xs sm:text-sm font-normal">
-          <span>{PLAYER_LEVEL + 1}/10</span>
+          <span>{PLAYER_LEVEL + 1}/50</span>
           <Star fill="yellow" className="text-yellow-200 size-3 sm:size-4" />
         </div>
       </Button>
