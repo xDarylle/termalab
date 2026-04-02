@@ -1,247 +1,252 @@
 export default [
   {
-    term: "FORCE",
-    description: "A push or pull on an object.",
-    sample_text: "She applied force to move the chair.",
+    "term": "HOMOGENEOUS",
+    "description": "A mixture in which the components are evenly distributed and cannot be easily distinguished.",
+    "sample_text": "Saltwater is a homogeneous mixture because the salt dissolves completely."
   },
   {
-    term: "MASS",
-    description: "Amount of matter in an object.",
-    sample_text: "The mass of the rock is 2 kg.",
+    "term": "ELECTROLYSIS",
+    "description": "The process of using electricity to break down a compound into simpler substances.",
+    "sample_text": "Water undergoes electrolysis to produce hydrogen and oxygen gases."
   },
   {
-    term: "VOLUME",
-    description: "The amount of space an object occupies.",
-    sample_text: "The box has a volume of 3 cubic meters.",
+    "term": "HETEROGENEOUS",
+    "description": "A mixture in which the components are not evenly distributed and can be easily seen.",
+    "sample_text": "Oil and water form a heterogeneous mixture because they separate into layers."
   },
   {
-    term: "ENERGY",
-    description: "The ability to do work.",
-    sample_text: "Plants get energy from sunlight.",
+    "term": "SOLUBILITY",
+    "description": "The ability of a substance to dissolve in another substance under certain conditions.",
+    "sample_text": "Sugar has high solubility in water."
   },
   {
-    term: "GRAVITY",
-    description: "Force that pulls objects toward Earth.",
-    sample_text: "Gravity keeps us on the ground.",
+    "term": "SUPERSATURATED",
+    "description": "A solution that contains more solute than what is normally possible at a given temperature.",
+    "sample_text": "Supersaturated solutions can form crystals when disturbed."
   },
   {
-    term: "ATOM",
-    description: "Smallest unit of matter.",
-    sample_text: "Atoms make up everything around us.",
+    "term": "CRYSTALLIZE",
+    "description": "To form solid crystals from a solution, melt, or gas.",
+    "sample_text": "Salt crystallizes as water slowly evaporates."
   },
   {
-    term: "MOLECULE",
-    description: "Two or more atoms bonded together.",
-    sample_text: "Water is a molecule made of hydrogen and oxygen.",
+    "term": "CONCENTRATION",
+    "description": "The amount of solute present in a given quantity of solution.",
+    "sample_text": "High concentration solutions contain more dissolved sugar."
   },
   {
-    term: "CELL",
-    description: "Basic unit of life.",
-    sample_text: "All living things are made of cells.",
+    "term": "DISPLACEMENT",
+    "description": "The straight-line distance and direction from the starting point to the ending point of an object.",
+    "sample_text": "Displacement considers both distance and direction."
   },
   {
-    term: "ORGAN",
-    description: "Group of tissues working together.",
-    sample_text: "The heart is an important organ.",
+    "term": "ACCELERATION",
+    "description": "The rate at which the velocity of an object changes over time.",
+    "sample_text": "Acceleration occurs when a car speeds up on a highway."
   },
   {
-    term: "TISSUE",
-    description: "Group of similar cells working together.",
-    sample_text: "Muscle tissue helps us move.",
+    "term": "DECELERATION",
+    "description": "A decrease in the speed of an object over time.",
+    "sample_text": "Braking causes deceleration in vehicles."
   },
   {
-    term: "EVAPORATION",
-    description: "Liquid changing into gas.",
-    sample_text: "Water dries because of evaporation.",
+    "term": "LONGITUDINAL",
+    "description": "A wave in which vibrations move parallel to the direction of wave propagation.",
+    "sample_text": "Sound waves are longitudinal waves."
   },
   {
-    term: "CONDENSATION",
-    description: "Gas changing into liquid.",
-    sample_text: "Water droplets form due to condensation.",
+    "term": "TRANSVERSE",
+    "description": "A wave in which vibrations move perpendicular to the direction of wave propagation.",
+    "sample_text": "Light waves are transverse waves."
   },
   {
-    term: "PRECIPITATION",
-    description: "Water falling from clouds.",
-    sample_text: "Rain is a type of precipitation.",
+    "term": "RAREFACTION",
+    "description": "The region in a longitudinal wave where particles are spread apart.",
+    "sample_text": "Rarefaction decreases air pressure in sound waves."
   },
   {
-    term: "TEMPERATURE",
-    description: "Measure of how hot or cold something is.",
-    sample_text: "The temperature today is 30°C.",
+    "term": "COMPRESSION",
+    "description": "The region in a longitudinal wave where particles are close together.",
+    "sample_text": "Compression increases air pressure in sound waves."
   },
   {
-    term: "MAGNET",
-    description: "Object that attracts iron.",
-    sample_text: "The magnet sticks to the fridge.",
+    "term": "SEISMIC",
+    "description": "Related to earthquakes or vibrations traveling through Earth.",
+    "sample_text": "Seismic waves move through the Earth during an earthquake."
   },
   {
-    term: "ELECTRICITY",
-    description: "Flow of electric charge.",
-    sample_text: "Electricity powers our lights.",
+    "term": "KINETIC ENERGY",
+    "description": "The energy of an object due to its motion.",
+    "sample_text": "A moving car possesses kinetic energy."
   },
   {
-    term: "CIRCUIT",
-    description: "Closed path for electricity.",
-    sample_text: "The bulb lights up in a closed circuit.",
+    "term": "OSCILLATION",
+    "description": "Repeated back-and-forth motion of an object around a central point.",
+    "sample_text": "A pendulum exhibits oscillation as it swings."
   },
   {
-    term: "PLANT",
-    description: "Living organism that makes its own food.",
-    sample_text: "A sunflower is a plant.",
+    "term": "POLARIZATION",
+    "description": "The alignment of light waves in a specific direction.",
+    "sample_text": "Polarization reduces glare on sunglasses."
   },
   {
-    term: "ANIMAL",
-    description: "Living organism that feeds on others.",
-    sample_text: "A dog is an animal.",
+    "term": "INTERFERENCE",
+    "description": "The overlapping of two or more waves resulting in a new wave pattern.",
+    "sample_text": "Interference affects the intensity of sound waves."
   },
   {
-    term: "HABITAT",
-    description: "Natural home of an organism.",
-    sample_text: "The desert is a camel’s habitat.",
+    "term": "PHOTOMETER",
+    "description": "An instrument used to measure the intensity of light.",
+    "sample_text": "A photometer measures the brightness of a lamp."
   },
   {
-    term: "ECOSYSTEM",
-    description: "Community of organisms and environment.",
-    sample_text: "A forest is an ecosystem.",
+    "term": "CONVECTION",
+    "description": "Heat transfer through the movement of fluids such as liquids or gases.",
+    "sample_text": "Boiling water transfers heat by convection."
   },
   {
-    term: "WEATHER",
-    description: "Day-to-day condition of atmosphere.",
-    sample_text: "The weather is sunny today.",
+    "term": "RADIATION",
+    "description": "The transfer of energy through electromagnetic waves.",
+    "sample_text": "The Sun warms Earth through radiation."
   },
   {
-    term: "CLIMATE",
-    description: "Long-term weather patterns.",
-    sample_text: "The climate in the tropics is warm.",
+    "term": "COULOMB",
+    "description": "The SI unit of electric charge.",
+    "sample_text": "Electric charge is measured in coulombs."
   },
   {
-    term: "FOSSIL",
-    description: "Preserved remains of ancient life.",
-    sample_text: "The museum displayed a dinosaur fossil.",
+    "term": "VOLTAGE",
+    "description": "The electric potential difference between two points.",
+    "sample_text": "Voltage pushes electric current through a circuit."
   },
   {
-    term: "SOLAR SYSTEM",
-    description: "Sun and objects orbiting it.",
-    sample_text: "Earth is in the solar system.",
+    "term": "AMPERE",
+    "description": "The SI unit of electric current.",
+    "sample_text": "Current is measured in amperes."
   },
   {
-    term: "PLANET",
-    description: "Large object orbiting a star.",
-    sample_text: "Mars is a planet.",
+    "term": "INDUCTION",
+    "description": "The process of producing electric current without direct contact.",
+    "sample_text": "Induction occurs when a magnet moves near a coil of wire."
   },
   {
-    term: "STAR",
-    description: "Massive glowing ball of gas.",
-    sample_text: "The Sun is a star.",
+    "term": "NEUTRAL",
+    "description": "A state in which an object has no net electric charge.",
+    "sample_text": "Atoms are usually electrically neutral."
   },
   {
-    term: "GALAXY",
-    description: "System of millions of stars.",
-    sample_text: "We live in the Milky Way galaxy.",
+    "term": "DESTINATION",
+    "description": "The final location or endpoint of a moving object.",
+    "sample_text": "The destination helps determine the displacement of a car."
   },
   {
-    term: "ROTATION",
-    description: "Spinning of an object.",
-    sample_text: "Earth’s rotation causes day and night.",
+    "term": "HEMISPHERE",
+    "description": "Half of the Earth, divided by the equator or prime meridian.",
+    "sample_text": "The northern hemisphere experiences summer while the southern hemisphere experiences winter."
   },
   {
-    term: "REVOLUTION",
-    description: "Movement around another object.",
-    sample_text: "Earth’s revolution causes seasons.",
+    "term": "BIOMASS",
+    "description": "Organic material used as a source of energy.",
+    "sample_text": "Biomass can be converted into biofuel."
   },
   {
-    term: "PHOTOSYNTHESIS",
-    description: "Plants making food using sunlight.",
-    sample_text: "Photosynthesis produces oxygen.",
+    "term": "HYDROPOWER",
+    "description": "Energy generated from flowing or falling water.",
+    "sample_text": "Hydropower plants use rivers to generate electricity."
   },
   {
-    term: "RESPIRATION",
-    description: "Process of releasing energy from food.",
-    sample_text: "Cells use respiration to produce energy.",
+    "term": "MESOSPHERE",
+    "description": "The middle layer of Earth’s atmosphere above the stratosphere.",
+    "sample_text": "Meteors burn up in the mesosphere."
   },
   {
-    term: "SOLID",
-    description: "State of matter with fixed shape.",
-    sample_text: "Ice is a solid.",
+    "term": "STRATOSPHERE",
+    "description": "The atmospheric layer that contains the ozone layer.",
+    "sample_text": "Commercial airplanes often fly in the lower stratosphere."
   },
   {
-    term: "LIQUID",
-    description: "State of matter with fixed volume.",
-    sample_text: "Water is a liquid.",
+    "term": "EXOSPHERE",
+    "description": "The outermost layer of Earth’s atmosphere where satellites orbit.",
+    "sample_text": "Satellites move within the exosphere."
   },
   {
-    term: "GAS",
-    description: "State of matter with no fixed shape.",
-    sample_text: "Air is a gas.",
+    "term": "TROPOSPHERE",
+    "description": "The lowest layer of Earth’s atmosphere where weather occurs.",
+    "sample_text": "Clouds form in the troposphere."
   },
   {
-    term: "MIXTURE",
-    description: "Two or more substances combined.",
-    sample_text: "Salad is a mixture.",
+    "term": "ATMOSPHERE",
+    "description": "The layer of gases surrounding Earth.",
+    "sample_text": "The atmosphere protects life on Earth from harmful radiation."
   },
   {
-    term: "SOLUTION",
-    description: "Uniform mixture.",
-    sample_text: "Salt water is a solution.",
+    "term": "MONSOON",
+    "description": "A seasonal wind that brings heavy rainfall.",
+    "sample_text": "The monsoon season causes flooding in some regions."
   },
   {
-    term: "FRICTION",
-    description: "Force that resists motion.",
-    sample_text: "Friction slows the bike down.",
+    "term": "SOLSTICE",
+    "description": "The longest or shortest day of the year due to Earth’s tilt.",
+    "sample_text": "The summer solstice has the longest daylight hours."
   },
   {
-    term: "SPEED",
-    description: "Distance traveled per time.",
-    sample_text: "The car has high speed.",
+    "term": "EQUINOX",
+    "description": "A day when day and night are approximately equal in length.",
+    "sample_text": "The vernal equinox occurs in March."
   },
   {
-    term: "LIGHT",
-    description: "Energy we can see.",
-    sample_text: "Light helps us see objects.",
+    "term": "PERIHELION",
+    "description": "The point in Earth’s orbit when it is closest to the Sun.",
+    "sample_text": "Earth moves fastest in its orbit during perihelion."
   },
   {
-    term: "SOUND",
-    description: "Vibrations that travel through air.",
-    sample_text: "Sound travels as waves.",
+    "term": "APHELION",
+    "description": "The point in Earth’s orbit when it is farthest from the Sun.",
+    "sample_text": "Earth is farthest from the Sun during aphelion in July."
   },
   {
-    term: "REFLECTION",
-    description: "Light bouncing off a surface.",
-    sample_text: "The mirror shows reflection.",
+    "term": "PENUMBRA",
+    "description": "The lighter part of a shadow surrounding the darker umbra.",
+    "sample_text": "During a partial eclipse, the penumbra causes a dim shadow."
   },
   {
-    term: "REFRACTION",
-    description: "Bending of light.",
-    sample_text: "The straw looks bent due to refraction.",
+    "term": "OPAQUE",
+    "description": "A material that does not allow light to pass through.",
+    "sample_text": "Wood is opaque because it blocks all light."
   },
   {
-    term: "INSULATOR",
-    description: "Material that resists electricity.",
-    sample_text: "Rubber is an insulator.",
+    "term": "LUMINOUS",
+    "description": "A source that produces its own light.",
+    "sample_text": "The Sun is luminous because it emits light."
   },
   {
-    term: "CONDUCTOR",
-    description: "Material that allows electricity.",
-    sample_text: "Copper is a conductor.",
+    "term": "TRANSPARENT",
+    "description": "A material that allows light to pass through clearly.",
+    "sample_text": "Glass is transparent and lets sunlight in."
   },
   {
-    term: "NUTRIENT",
-    description: "Substance needed for growth.",
-    sample_text: "Plants need nutrients from soil.",
+    "term": "REFLECTION",
+    "description": "The bouncing back of light, sound, or heat from a surface.",
+    "sample_text": "Mirrors show a clear reflection of objects."
   },
   {
-    term: "ROOT",
-    description: "Part of plant that absorbs water.",
-    sample_text: "Roots anchor the plant.",
+    "term": "SATURATED",
+    "description": "A solution that contains the maximum amount of solute possible.",
+    "sample_text": "A saturated sugar solution cannot dissolve more sugar."
   },
   {
-    term: "STEM",
-    description: "Supports plant structure.",
-    sample_text: "The stem holds leaves upright.",
+    "term": "UNSATURATED",
+    "description": "A solution that can still dissolve more solute.",
+    "sample_text": "An unsaturated salt solution can absorb more salt."
   },
   {
-    term: "LEAF",
-    description: "Plant part for photosynthesis.",
-    sample_text: "Leaves absorb sunlight.",
+    "term": "SOLVENT",
+    "description": "The substance that dissolves the solute in a solution.",
+    "sample_text": "Water is a common solvent that dissolves many substances."
   },
-];
+  {
+    "term": "SOLUTE",
+    "description": "The substance that is dissolved in a solvent.",
+    "sample_text": "Salt is the solute in saltwater."
+  }
+]
