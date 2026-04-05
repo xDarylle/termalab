@@ -1,10 +1,8 @@
-import { ModeToggle } from "@/components/toggle-theme";
-import { ToggleMute } from "@/components/toggle-mute";
-import { HomeButton } from "@/components/home-button";
 import { CircleDollarSign } from "lucide-react";
 import { Outlet, useLocation } from "react-router";
 import { StartGameDialog } from "@/components/start-game-dialog";
 import { useCoins } from "@/hooks/useCoins";
+import { MobileNav } from "@/components/move-nav";
 
 export const Layout = () => {
   const location = useLocation();
@@ -20,9 +18,7 @@ export const Layout = () => {
           <span className="text-xs sm:text-sm font-bold mx-1">{count}</span>
         </div>
         <div className="flex flex-row items-center gap-1 sm:gap-2">
-          <HomeButton key={location.pathname} />
-          <ToggleMute />
-          <ModeToggle />
+          <MobileNav  key={location.pathname}/>
         </div>
       </div>
       <div className="flex-1 flex min-h-0 overflow-auto">
