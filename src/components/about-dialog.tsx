@@ -21,7 +21,7 @@ export function AboutDialog(props: PropsWithChildren) {
               About TERMALAB
             </DialogTitle>
           </DialogHeader>
-          <ScrollArea className="h-[80vh]">
+          <ScrollArea className="h-[80dvh]">
             {/* Scrollable Content */}
             <div className="p-4 text-sm leading-relaxed space-y-4">
               <p>Hello, learners!</p>
